@@ -105,6 +105,8 @@ npm install
 
 Create a `.env` file in the `server/` root:
 
+**For local development (Docker PostgreSQL):**
+
 ```
 PORT=5001
 DB_USER=postgres
@@ -115,7 +117,32 @@ DB_PORT=5433
 JWT_SECRET=your_jwt_secret_key
 ```
 
-### 3. Start the development server
+**For production / Vercel deployment (Neon cloud PostgreSQL):**
+
+```
+PORT=5001
+DATABASE_URL=postgresql://neondb_owner:your_password@ep-xxx-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require
+JWT_SECRET=your_jwt_secret_key
+NODE_ENV=production
+```
+
+> The application automatically detects `DATABASE_URL` and uses it for cloud connections with SSL. If `DATABASE_URL` is not set, it falls back to the individual `DB_*` variables for local development.
+
+### 3. Database setup
+
+**Option A: Local (Docker PostgreSQL)**
+- Use Docker Desktop with PostgreSQL running on port 5433
+- Create a database named `zorvyn-ledgerflow`
+- Run the table creation SQL (see Database Schema section below)
+
+**Option B: Cloud (Neon — recommended for deployment)**
+1. Sign up at [neon.tech](https://neon.tech) (free tier available)
+2. Create a new project — a database is automatically provisioned
+3. Copy the connection string from the Neon dashboard
+4. Set it as `DATABASE_URL` in your `.env` or Vercel environment variables
+5. Run the table creation SQL in Neon's SQL Editor
+
+### 4. Start the development server
 
 ```bash
 npm run dev

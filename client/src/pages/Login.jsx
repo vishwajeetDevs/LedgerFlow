@@ -33,8 +33,8 @@ const Login = () => {
       <div className="w-full max-w-md bg-white dark:bg-gray-900 rounded-xl shadow-lg p-8 animate-fade-in-up">
         <div className="text-center mb-6">
           <img src="/favicon.svg" alt="LedgerFlow" className="w-12 h-12 mx-auto mb-3" />
-          <h2 className="text-2xl font-bold text-gray-900">Welcome Back</h2>
-          <p className="text-sm text-gray-500 mt-1">Login to your LedgerFlow account</p>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">LedgerFlow</h2>
+          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Login to your LedgerFlow account</p>
         </div>
 
         <form onSubmit={handleLogin} className="space-y-5">

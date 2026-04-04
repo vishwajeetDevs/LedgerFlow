@@ -61,8 +61,7 @@ PostgreSQL Database
 ### Prerequisites
 
 - Node.js v18+
-- PostgreSQL running locally
-- A database named `zorvyn-ledgerflow`
+- PostgreSQL — either local (Docker) or cloud ([Neon](https://neon.tech) free tier)
 
 ### 1. Clone and setup the backend
 
@@ -73,6 +72,7 @@ npm install
 
 Create `server/.env`:
 
+**Local development:**
 ```
 PORT=5001
 DB_USER=postgres
@@ -81,6 +81,14 @@ DB_NAME=zorvyn-ledgerflow
 DB_PASSWORD=your_password
 DB_PORT=5433
 JWT_SECRET=your_jwt_secret_key
+```
+
+**Cloud deployment (Neon):**
+```
+PORT=5001
+DATABASE_URL=postgresql://neondb_owner:your_password@ep-xxx-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require
+JWT_SECRET=your_jwt_secret_key
+NODE_ENV=production
 ```
 
 Create the following tables in PostgreSQL:
