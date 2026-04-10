@@ -121,6 +121,9 @@ const Register = () => {
               <option value="2">Analyst</option>
               <option value="3">Admin</option>
             </select>
+            <p className="text-[11px] text-amber-600 dark:text-amber-400 mt-1.5 leading-relaxed">
+              Note: Role selection is available here for testing purposes only. In the final version, only the Viewer role will be available during signup. Admin and Analyst roles will be assigned by an Admin.
+            </p>
           </div>
 
           <button

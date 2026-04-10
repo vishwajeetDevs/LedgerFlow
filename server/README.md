@@ -432,12 +432,17 @@ Token expires in **24 hours** (`1d`).
 | Dashboard summary | Own data | System-wide | System-wide |
 | Category breakdown | Own data | System-wide | System-wide |
 | View records | Own only | All users | All users |
-| Create records | Own | Own | Own |
-| Edit/Delete records | Own only | Own only | Any record |
+| Create records | Yes (own) | No (read-only) | No (read-only) |
+| Edit/Delete records | Own only | No | Any record (edit/delete only) |
 | View user list | No | Read-only | Full access |
 | Edit users | No | No | Yes |
 | Ban/Unban users | No | No | Yes |
 | Change user passwords | No | No | Yes |
+| Delete users | No | No | Yes |
+
+> **Note:** During registration, all three roles (Viewer, Analyst, Admin) are available for selection. This is temporarily enabled for testing and demonstration purposes. In the final production version, only the Viewer role will be available during signup. Admin and Analyst roles will be assigned by an Admin.
+>
+> **Record creation is restricted to Viewer role only.** Viewers are the end users who create and manage their own financial records. Admins and Analysts have read-only access to records — they can view, track, and analyze reports but cannot create new records.
 
 **Viewer** — An individual user who manages their own financial records. Can create, view, update, and delete their own entries. Dashboard shows personal income, expense, and balance. Cannot see any other user's data.
 

@@ -22,6 +22,7 @@ const sections = {
         "Search transactions by notes, category, or keywords",
         "Filter by type (income/expense), category, and date range",
         "Sort by newest, oldest, or amount (high/low)",
+        "Only Viewers can create records — Admins and Analysts have read-only access",
       ],
     },
     {
@@ -47,11 +48,10 @@ const sections = {
       title: "Transactions",
       items: [
         "View all transactions across all users with user attribution",
-        "Create new financial records for your own account",
-        "Edit or delete only your own records",
         "Search and filter across all system data",
         "Sort by date or amount for analysis",
-        "Cannot modify other users' records",
+        "Read-only access — cannot create, edit, or delete records",
+        "Analysts are meant to view, track, and analyze reports only",
       ],
     },
     {
@@ -88,10 +88,10 @@ const sections = {
       title: "Transactions",
       items: [
         "View all transactions across all users with user attribution",
-        "Create new financial records",
         "Edit or delete any record from any user (via inline modals)",
         "Search and filter across all system data",
         "Sort by date or amount",
+        "Read-only access for record creation — Admins manage users and data, not create records",
         "Full CRUD access without ownership restrictions",
       ],
     },

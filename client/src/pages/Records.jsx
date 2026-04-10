@@ -200,6 +200,27 @@ const Records = () => {
     currentPage * PER_PAGE
   );
 
+  const exportCSV = () => {
+    const headers = ["User", "Amount", "Type", "Category", "Date", "Notes"];
+    const rows = filteredRecords.map((r) => [
+      r.user_name || "",
+      r.amount,
+      r.type,
+      getCategoryName(r.category_id),
+      r.date,
+      (r.notes || "").replace(/,/g, " "),
+    ]);
+
+    const csv = [headers.join(","), ...rows.map((r) => r.join(","))].join("\n");
+    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "transactions-ledger.csv";
+    link.click();
+    URL.revokeObjectURL(url);
+  };
+
   if (loading) return <p className="text-gray-500">Loading records...</p>;
 
   return (
@@ -207,12 +228,24 @@ const Records = () => {
       <div className="flex items-center justify-between mb-6 animate-fade-in-up">
         <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Transactions</h2>
 
-        <button
-          onClick={openCreateModal}
-          className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors cursor-pointer"
-        >
-          + Create Record
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={exportCSV}
+            className="px-4 py-2 border border-gray-300 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 text-sm font-medium rounded-lg transition-colors cursor-pointer flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Export CSV
+          </button>
+
+          <button
+            onClick={openCreateModal}
+            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors cursor-pointer"
+          >
+            + Create Record
+          </button>
+        </div>
       </div>
 
       <div className="bg-white dark:bg-gray-900 rounded-xl shadow-sm p-4 mb-6 flex flex-wrap items-center gap-4 animate-fade-in-up stagger-1">
