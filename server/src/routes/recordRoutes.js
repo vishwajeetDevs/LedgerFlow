@@ -5,10 +5,11 @@ import { allowRoles } from "../middlewares/roleMiddleware.js";
 
 const router = express.Router();
 
-// All roles — CRUD (ownership enforced in service layer)
-router.post("/", authMiddleware, allowRoles(1, 2, 3), createRecord);
-router.put("/:id", authMiddleware, allowRoles(1, 2, 3), updateRecord);
-router.delete("/:id", authMiddleware, allowRoles(1, 2, 3), deleteRecord);
+// Viewer only — create records
+router.post("/", authMiddleware, allowRoles(1), createRecord);
+// Viewer + Admin — update/delete (ownership enforced in service layer)
+router.put("/:id", authMiddleware, allowRoles(1, 3), updateRecord);
+router.delete("/:id", authMiddleware, allowRoles(1, 3), deleteRecord);
 
 // All roles — view records (scope enforced in service: viewer=own, analyst/admin=all)
 router.get("/", authMiddleware, allowRoles(1, 2, 3), getRecords);

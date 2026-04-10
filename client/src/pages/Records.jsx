@@ -203,7 +203,7 @@ const Records = () => {
   const exportCSV = () => {
     const headers = ["User", "Amount", "Type", "Category", "Date", "Notes"];
     const rows = filteredRecords.map((r) => [
-      r.user_name || "",
+      r.user_name || user?.name || "",
       r.amount,
       r.type,
       getCategoryName(r.category_id),
@@ -239,12 +239,14 @@ const Records = () => {
             Export CSV
           </button>
 
-          <button
-            onClick={openCreateModal}
-            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors cursor-pointer"
-          >
-            + Create Record
-          </button>
+          {user?.role === 1 && (
+            <button
+              onClick={openCreateModal}
+              className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium rounded-lg transition-colors cursor-pointer"
+            >
+              + Create Record
+            </button>
+          )}
         </div>
       </div>
 
