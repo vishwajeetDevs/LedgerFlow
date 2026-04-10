@@ -56,3 +56,12 @@ export const deleteUser = async (id) => {
   );
   return result.rows[0];
 };
+
+export const permanentDeleteUser = async (id) => {
+  await pool.query(`DELETE FROM tbl_records WHERE user_id = $1`, [id]);
+  const result = await pool.query(
+    `DELETE FROM tbl_users WHERE id = $1 RETURNING id, name`,
+    [id]
+  );
+  return result.rows[0];
+};

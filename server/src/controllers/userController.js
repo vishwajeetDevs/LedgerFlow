@@ -82,3 +82,15 @@ export const deleteUser = async (req, res) => {
     return errorResponse(res, 500, err.message);
   }
 };
+
+export const permanentDeleteUser = async (req, res) => {
+  try {
+    await userService.permanentDeleteUser(req.params.id);
+    return successResponse(res, 200, "User permanently deleted");
+  } catch (err) {
+    if (err.message === "User not found") {
+      return errorResponse(res, 404, err.message);
+    }
+    return errorResponse(res, 500, err.message);
+  }
+};

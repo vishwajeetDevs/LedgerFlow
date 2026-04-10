@@ -56,3 +56,9 @@ export const deleteUser = async (id) => {
   if (!deleted) throw new Error("User not found");
   return deleted;
 };
+
+export const permanentDeleteUser = async (id) => {
+  const deleted = await userModel.permanentDeleteUser(id);
+  if (!deleted) throw new Error("User not found");
+  return deleted;
+};

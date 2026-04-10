@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getUsers, updateUser, deleteUser, changePassword } from "../api/userApi";
+import { getUsers, updateUser, deleteUser, changePassword, permanentDeleteUser } from "../api/userApi";
 import { useAuth } from "../context/AuthContext";
 import { toast } from "../components/Toast";
 import ConfirmModal from "../components/ConfirmModal";
@@ -17,6 +17,7 @@ const Users = () => {
   const [editModal, setEditModal] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [deactivateUser, setDeactivateUser] = useState(null);
+  const [deleteUserModal, setDeleteUserModal] = useState(null);
   const [passwordModal, setPasswordModal] = useState(null);
   const [newPassword, setNewPassword] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -127,6 +128,17 @@ const Users = () => {
       toast.success("User banned successfully");
     } catch (error) {
       toast.error(error.response?.data?.message || "Deactivation failed");
+    }
+  };
+
+  const confirmPermanentDelete = async () => {
+    try {
+      await permanentDeleteUser(deleteUserModal.id);
+      setDeleteUserModal(null);
+      fetchUsers();
+      toast.success(`${deleteUserModal.name} permanently deleted`);
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Delete failed");
     }
   };
 
@@ -285,6 +297,18 @@ const Users = () => {
                         </Tooltip>
                       )
                     )}
+                    {user.id !== currentUser?.id && (
+                      <Tooltip text="Delete user">
+                        <button
+                          onClick={() => setDeleteUserModal(user)}
+                          className="p-1.5 text-red-600 border border-red-300 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
+                        >
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </Tooltip>
+                    )}
                     </div>
                   </td>
                 )}
@@ -307,6 +331,16 @@ const Users = () => {
         confirmColor="red"
         onConfirm={confirmDeactivate}
         onCancel={() => setDeactivateUser(null)}
+      />
+
+      <ConfirmModal
+        open={!!deleteUserModal}
+        title="Delete User Permanently"
+        message={`This will permanently delete ${deleteUserModal?.name} and all their records. This action cannot be undone.`}
+        confirmLabel="Delete"
+        confirmColor="red"
+        onConfirm={confirmPermanentDelete}
+        onCancel={() => setDeleteUserModal(null)}
       />
 
       <Modal open={!!editModal} onClose={closeEditModal}>
