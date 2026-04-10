@@ -427,30 +427,53 @@ const Records = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type</label>
-                <select
-                  value={editForm.type || "income"}
-                  onChange={(e) => setEditForm({ ...editForm, type: e.target.value })}
-                  className={inputClass}
-                >
-                  <option value="income">Income</option>
-                  <option value="expense">Expense</option>
-                </select>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Type</label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setEditForm({ ...editForm, type: "income", category_id: "" })}
+                    className={`flex-1 py-2 text-sm font-medium rounded-lg border transition-all cursor-pointer ${
+                      (editForm.type || "income") === "income"
+                        ? "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 border-green-300 dark:border-green-700"
+                        : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:border-green-300"
+                    }`}
+                  >
+                    Income
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setEditForm({ ...editForm, type: "expense", category_id: "" })}
+                    className={`flex-1 py-2 text-sm font-medium rounded-lg border transition-all cursor-pointer ${
+                      (editForm.type || "income") === "expense"
+                        ? "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 border-red-300 dark:border-red-700"
+                        : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:border-red-300"
+                    }`}
+                  >
+                    Expense
+                  </button>
+                </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
-                <select
-                  value={editForm.category_id || ""}
-                  onChange={(e) => setEditForm({ ...editForm, category_id: e.target.value })}
-                  className={inputClass}
-                >
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+                <div className="flex flex-wrap gap-2">
                   {categories
                     .filter((c) => c.type === (editForm.type || "income"))
                     .map((c) => (
-                      <option key={c.id} value={c.id}>{c.name}</option>
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => setEditForm({ ...editForm, category_id: c.id })}
+                        className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-all cursor-pointer ${
+                          Number(editForm.category_id) === c.id
+                            ? "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400 border-indigo-300 dark:border-indigo-700"
+                            : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:border-indigo-300"
+                        }`}
+                      >
+                        {c.name}
+                      </button>
                     ))}
-                </select>
+                </div>
               </div>
 
               <div>
@@ -511,31 +534,53 @@ const Records = () => {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Type</label>
-                <select
-                  value={createForm.type}
-                  onChange={(e) => setCreateForm({ ...createForm, type: e.target.value, category_id: "" })}
-                  className={inputClass}
-                >
-                  <option value="income">Income</option>
-                  <option value="expense">Expense</option>
-                </select>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Type</label>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setCreateForm({ ...createForm, type: "income", category_id: "" })}
+                    className={`flex-1 py-2 text-sm font-medium rounded-lg border transition-all cursor-pointer ${
+                      createForm.type === "income"
+                        ? "bg-green-100 dark:bg-green-900/40 text-green-700 dark:text-green-400 border-green-300 dark:border-green-700"
+                        : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:border-green-300"
+                    }`}
+                  >
+                    Income
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCreateForm({ ...createForm, type: "expense", category_id: "" })}
+                    className={`flex-1 py-2 text-sm font-medium rounded-lg border transition-all cursor-pointer ${
+                      createForm.type === "expense"
+                        ? "bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-400 border-red-300 dark:border-red-700"
+                        : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:border-red-300"
+                    }`}
+                  >
+                    Expense
+                  </button>
+                </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category</label>
-                <select
-                  value={createForm.category_id}
-                  onChange={(e) => setCreateForm({ ...createForm, category_id: e.target.value })}
-                  className={inputClass}
-                >
-                  <option value="">Select Category</option>
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Category</label>
+                <div className="flex flex-wrap gap-2">
                   {categories
                     .filter((c) => c.type === createForm.type)
                     .map((c) => (
-                      <option key={c.id} value={c.id}>{c.name}</option>
+                      <button
+                        key={c.id}
+                        type="button"
+                        onClick={() => setCreateForm({ ...createForm, category_id: c.id })}
+                        className={`px-3 py-1.5 text-sm font-medium rounded-lg border transition-all cursor-pointer ${
+                          createForm.category_id === c.id
+                            ? "bg-indigo-100 dark:bg-indigo-900/40 text-indigo-700 dark:text-indigo-400 border-indigo-300 dark:border-indigo-700"
+                            : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border-gray-300 dark:border-gray-700 hover:border-indigo-300"
+                        }`}
+                      >
+                        {c.name}
+                      </button>
                     ))}
-                </select>
+                </div>
               </div>
 
               <div>
